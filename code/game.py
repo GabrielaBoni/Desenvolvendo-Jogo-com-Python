@@ -18,7 +18,14 @@ class Game:
 
         self.state = "menu"
 
+        self.background = pygame.image.load("./assets/backgroundMenu.png")
+        self.background = pygame.transform.scale(self.background, (800, 600))
+
     def run(self):
+        pygame.mixer.music.load("assets/music.wav")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play(-1)
+
         while self.running:
             keys = pygame.key.get_pressed()
 
@@ -36,7 +43,7 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.level.player.jump()
 
-            self.screen.fill((0, 0, 0))
+            self.screen.blit(self.background, (0, 0))
 
             if self.state == "menu":
                 self.menu.draw(self.screen)
