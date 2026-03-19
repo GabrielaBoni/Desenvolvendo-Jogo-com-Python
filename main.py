@@ -1,10 +1,5 @@
-import pygame
+from code.game import Game
 
-pygame.init()
-window = pygame.display.set_mode((800, 600))
-
-while True:
-    for event in pygame.event.get():
-        print('saindo')
-        if event.type == pygame.QUIT:
-            quit()
+if __name__ == "__main__":
+    game = Game()
+    game.run()
