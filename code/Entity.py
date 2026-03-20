@@ -11,7 +11,7 @@ class Entity:
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def update(self, *args):
+    def update(self):
         pass
 
     def draw(self, screen):

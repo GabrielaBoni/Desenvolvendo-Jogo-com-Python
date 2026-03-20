@@ -1,25 +1,35 @@
 import pygame
-
 from code.Entity import Entity
 
 class Player(Entity):
-    def __init__(self, x, y, width, height, sprite=None):
-        super().__init__(x, y, width, height, sprite)
-
+    def __init__(self, x, y, width, height):
+        super().__init__(x, y, width, height, None)
         self.speed = 5
 
         # 🔽 GRAVIDADE
         self.velocity_y = 0
         self.gravity = 0.5
         self.jump_force = -10
+        self.is_jumping = True
 
-        self.is_jumping = True  # começa caindo
+        # 🔽 Sprites para cada direção
+        self.sprite_right = pygame.image.load("assets/gato.png")
+        self.sprite_left = pygame.transform.flip(self.sprite_right, True, False)  # espelha horizontalmente
+        self.sprite_right = pygame.transform.scale(self.sprite_right, (self.width, self.height))
+        self.sprite_left = pygame.transform.scale(self.sprite_left, (self.width, self.height))
+
+        self.sprite = self.sprite_right
+        self.facing_right = True
 
     def move(self, keys):
         if keys[pygame.K_LEFT]:
             self.x -= self.speed
-        if keys[pygame.K_RIGHT]:
+            self.sprite = self.sprite_left
+            self.facing_right = False
+        elif keys[pygame.K_RIGHT]:
             self.x += self.speed
+            self.sprite = self.sprite_right
+            self.facing_right = True
 
     def jump(self):
         if not self.is_jumping:
@@ -35,4 +45,4 @@ class Player(Entity):
         self.apply_gravity()
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (0, 0, 255), (self.x, self.y, self.width, self.height))
+        screen.blit(self.sprite, (self.x, self.y))
