@@ -7,6 +7,7 @@ from code.level import Level
 class Game:
     def __init__(self):
         pygame.init()
+
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Cat Adventure")
 
@@ -18,11 +19,17 @@ class Game:
 
         self.state = "menu"
 
-        self.background = pygame.image.load("./assets/backgroundMenu.png")
-        self.background = pygame.transform.scale(self.background, (800, 600))
+        # 🎨 BACKGROUND MENU
+        self.menu_bg = pygame.image.load("./assets/backgroundMenu.png")
+        self.menu_bg = pygame.transform.scale(self.menu_bg, (800, 600))
+
+        # 🎨 BACKGROUND JOGO
+        self.game_bg = pygame.image.load("./assets/City2_pale.png")
+        self.game_bg = pygame.transform.scale(self.game_bg, (800, 600))
 
     def run(self):
-        pygame.mixer.music.load("assets/music.wav")
+        # 🎵 Música
+        pygame.mixer.music.load("assets/music.wav")  # 👉 TROQUE se quiser outro nome
         pygame.mixer.music.set_volume(0.3)
         pygame.mixer.music.play(-1)
 
@@ -34,17 +41,27 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
+                # 🎮 INPUT DO MENU
                 if self.state == "menu":
                     action = self.menu.handle_input(event)
                     if action == "start":
                         self.state = "game"
 
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.level.player.jump()
+                # 🎮 INPUT DO JOGO
+                if self.state == "game":
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            self.level.player.jump()
 
-            self.screen.blit(self.background, (0, 0))
+            # 🎨 BACKGROUND (muda conforme estado)
+            if self.state == "menu":
+                self.screen.blit(self.menu_bg, (0, 0))
+                # 👉 COLOQUE A IMAGEM DO MENU AQUI
+            else:
+                self.screen.blit(self.game_bg, (0, 0))
+                # 👉 COLOQUE A IMAGEM DO JOGO AQUI
 
+            # 🎮 DESENHO
             if self.state == "menu":
                 self.menu.draw(self.screen)
             else:

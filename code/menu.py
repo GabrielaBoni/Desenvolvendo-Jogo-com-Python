@@ -2,9 +2,6 @@ import pygame
 
 class Menu:
     def __init__(self):
-        self.selected_option = 0
-        self.options = ["Iniciar", "Sair"]
-
         self.background = pygame.image.load("assets/backgroundMenu.png")
         self.background = pygame.transform.scale(self.background, (800, 600))
 
@@ -16,12 +13,11 @@ class Menu:
 
             # 🔤 fontes
             title_font = pygame.font.SysFont("arial", 80, bold=True)
-            option_font = pygame.font.SysFont("arial", 45)
-            info_font = pygame.font.SysFont("arial", 25)
+            info_font = pygame.font.SysFont("arial", 28, bold=True)
 
             screen_width = screen.get_width()
 
-            # 🐱 TÍTULO (com sombra simples)
+            # 🐱 TÍTULO (com sombra)
             cat = title_font.render("Cat", True, (255, 255, 255))
             cat_shadow = title_font.render("Cat", True, (0, 0, 0))
 
@@ -39,10 +35,9 @@ class Menu:
             screen.blit(cat, (cat_x, 100))
             screen.blit(adventure, (adv_x, 180))
 
-            # ▶️ MENU (cor laranja)
-            for i, option in enumerate(self.options):
-                text = option_font.render(option, True, (255, 255, 255))
-                screen.blit(text, (screen_width // 2 - text.get_width() // 2, 300 + i * 60))
+            # 🎮 INSTRUÇÃO PRINCIPAL
+            start_text = info_font.render("Pressione ENTER para começar", True, (255, 255, 255))
+            screen.blit(start_text, (screen_width // 2 - start_text.get_width() // 2, 320))
 
             # 🎮 CONTROLES
             controls = [
@@ -53,7 +48,7 @@ class Menu:
 
             for i, line in enumerate(controls):
                 text = info_font.render(line, True, (0, 0, 0))
-                screen.blit(text, (screen_width // 2 - text.get_width() // 2, 450 + i * 30))
+                screen.blit(text, (screen_width // 2 - text.get_width() // 2, 420 + i * 35))
 
     def handle_input(self, event):
         if event.type == pygame.KEYDOWN:

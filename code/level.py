@@ -13,8 +13,24 @@ class Level:
     def update(self, keys):
         self.player.update(keys)
 
+        # 🔥 colisão com plataformas
+        self.check_collisions()
+
         for enemy in self.enemies:
             enemy.update()
+
+    def check_collisions(self):
+        for platform in self.platforms:
+            if (
+                self.player.x < platform.x + platform.width and
+                self.player.x + self.player.width > platform.x and
+                self.player.y + self.player.height <= platform.y + 10 and
+                self.player.y + self.player.height + self.player.velocity_y >= platform.y
+            ):
+                # 👇 encostou na plataforma
+                self.player.y = platform.y - self.player.height
+                self.player.velocity_y = 0
+                self.player.is_jumping = False
 
     def draw(self, screen):
         self.player.draw(screen)
