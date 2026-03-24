@@ -7,11 +7,9 @@ class Enemy(Entity):
         self.speed = 2
         self.direction = 1  # 1 = direita | -1 = esquerda
 
-        # limites de patrulha
         self.min_x = x - 500
         self.max_x = x + 300
 
-        # 🔽 Sprites para cada direção
         self.sprite_right = pygame.image.load("assets/cachorro.png")
         self.sprite_left = pygame.transform.flip(self.sprite_right, True, False)
         self.sprite_right = pygame.transform.scale(self.sprite_right, (self.width, self.height))
@@ -22,11 +20,9 @@ class Enemy(Entity):
     def update(self):
         self.x += self.speed * self.direction
 
-        # troca direção ao atingir limite
         if self.x <= self.min_x or self.x + self.width >= self.max_x:
             self.direction *= -1
 
-        # atualiza sprite conforme direção
         if self.direction > 0:
             self.sprite = self.sprite_right
         else:

@@ -6,4 +6,4 @@ class Platform:
         self.height = height
 
     def draw(self, screen):
-        pass  # não desenha nada, só existe para colisão
+        pass
